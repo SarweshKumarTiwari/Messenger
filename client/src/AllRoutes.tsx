@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import AuthPage from './pages/auth/AuthPage'
 import Login from './pages/auth/Login'
+import Signup from './pages/auth/Signup';
 import ChatPage from './pages/chat/ChatPage';
 export default function AllRoutes() {
   const isAuth:boolean=false;
@@ -8,7 +9,7 @@ export default function AllRoutes() {
     <Router>
       <Routes>
         {!isAuth?<Route path='/' element={<AuthPage />}>
-          <Route  path='signup' element={<div />} />
+          <Route  path='signup' element={<Signup/>} />
           <Route path="login"  element={<Login />} />
         </Route>
         :

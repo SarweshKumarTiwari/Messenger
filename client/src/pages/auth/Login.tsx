@@ -1,6 +1,11 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 export default function Login() {
+  
+  const email=useRef<HTMLInputElement>(null);
+  const password=useRef<HTMLInputElement>(null);
+  
   return (
     <div className="m-16 mt-24  grid justify-items-center">
       <div className="flex justify-center m-4 ">
@@ -11,13 +16,13 @@ export default function Login() {
           Messenger
           </span>
       </div>
-      <div className="border border-gray-100 shadow-md p-4 rounded-lg w-1/3 h-72">
+      <div className="border border-gray-100 shadow-md p-4 rounded-lg w-1/3 h-min">
         <p className="p-4 font-mono text-xl text-center text-gray-400">Login to messenger</p>
         <div className="m-2 mb-4">
-          <input type="text" className="rounded-lg p-2 border border-gray-200 outline-0 w-full placeholder:text-gray-500 focus:placeholder:text-gray-400" id="" placeholder="Enter your userID" />
+          <input type="text" ref={email} className="rounded-lg p-2 border border-gray-200 outline-0 w-full placeholder:text-gray-500 focus:placeholder:text-gray-400" id="" placeholder="Enter your userID" />
         </div>
         <div className="m-2 mb-4">
-          <input type="text" className="rounded-lg p-2 border border-gray-200 outline-0 w-full placeholder:text-gray-500 focus:placeholder:text-gray-400" id="" placeholder="Password" />
+          <input type="password" ref={password} className="rounded-lg p-2 border border-gray-200 outline-0 w-full placeholder:text-gray-500 focus:placeholder:text-gray-400" id="" placeholder="Password" />
         </div>
         <div className="m-2 mb-4">
           <button className="rounded-lg p-2 bg-pinki-400 hover:bg-pinki-500 border-pinki-600  w-full" style={{"color":"white"}}>Submit</button>

@@ -1,0 +1,28 @@
+.lst_view{
+    margin: 0px;
+}
+.lst_view1{
+    margin:0px;
+}
+.disappear{
+    margin:0px;
+}
+.update{
+    margin:0px;
+}
+@media  screen and  (max-width:1080px){
+    .lst_view{
+        width: 100vw;
+    }
+    .lst_view1{
+        visibility: hidden;
+        display: none;
+    }
+    .disappear{
+        visibility: hidden;
+        display: none;
+    }
+    .update{
+        width: 100vw;
+    }
+}

@@ -1,0 +1,21 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import AuthPage from './pages/auth/AuthPage'
+import Login from './pages/auth/Login'
+import ChatPage from './pages/chat/ChatPage';
+export default function AllRoutes() {
+  const isAuth:boolean=false;
+  return (
+    <Router>
+      <Routes>
+        {!isAuth?<Route path='/' element={<AuthPage />}>
+          <Route  path='signup' element={<div />} />
+          <Route path="login"  element={<Login />} />
+        </Route>
+        :
+        <Route path='/' element={<ChatPage/>}/>
+        }
+        <Route path='*' element={<div>Page Not Found</div>}/>
+      </Routes>
+    </Router>
+  )
+}

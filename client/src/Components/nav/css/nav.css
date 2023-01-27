@@ -1,0 +1,107 @@
+.nav{
+    background-color: #fcf5eb;
+    height: 80px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+    min-width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    @media (min-width: 1200px){height: 80px;};
+}
+.nav1{
+    padding: 0 40px;
+    align-items: center;
+    box-sizing:border-box;
+    display: flex;
+    font-family:Arial, Helvetica, sans-serif;
+    justify-content:space-between;
+    width:100%;
+}
+.st1{
+   margin-right: 15%;
+   display: flex;
+}
+.st2{
+    display:block;
+}
+.st3{
+    visibility: hidden;
+    display: none;
+}
+.text{
+    margin-top: 6px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size:larger;
+    color: rgb(240, 53, 131);
+}
+.ul{
+    display: flex;
+    justify-content: center;
+}
+.li{
+    padding: 8px 20px;
+    display: list-item;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:larger;
+    text-align:center;
+}
+.li:hover{
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: 3px;
+    text-decoration-color:rgb(240, 53, 131) ;
+    text-underline-offset: 5px;    
+}
+.li.add{
+    background-color: rgb(240, 53, 131);
+    color: white;
+    border-radius:20px;
+    border-color:rgb(175, 39, 96) ;
+}
+.li.add:hover{
+    text-decoration: none;
+    background-color: rgb(206, 50, 115);
+}
+.mob{
+    visibility:hidden;
+    display:none;
+}
+.ulmob{
+    border-top: 2px solid rgb(163, 162, 162);
+}
+.mobli{
+    padding:20px;
+    border-bottom: 1px solid gray;
+    display: list-item;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:xx-large;
+}
+.mobNav{
+    visibility:hidden;
+    display:none;
+}
+@media screen and (max-width: 1028px){
+    .st2{
+        display: none;
+    }
+    .st1{
+        margin-right: 0px;
+    }
+    .mob{
+        visibility: visible;
+        display: block;
+    }
+    .mobNav{
+        display: block;
+        visibility: visible;
+        padding: 0 ;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        background-color:  #fcf5eb;
+    }
+}
+

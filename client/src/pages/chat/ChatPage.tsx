@@ -1,7 +1,6 @@
 import ChatBox from './group-freiends-chat/ChatBox'
 import GroupFriendList from './group-list/GroupFriendList'
 import ProviderOfContext from "./context/ProviderOfContext"
-import "./orient.css"
 export default function ChatPage() {
   return (
     <div>

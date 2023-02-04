@@ -1,5 +1,6 @@
 import "../css/nav.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 export default function NavBar() {
     const [isMenuOpen, setisMenuOpen] = useState<boolean>(false)
     return (
@@ -36,8 +37,8 @@ export default function NavBar() {
                     </nav>
                     <div className="st2">
                         <ul className="ul">
-                            <li className="li">ChatRoom</li>
-                            <li className="li add">Be a Member</li>
+                            <li className="li"><Link to='/signup'>ChatRoom</Link></li>
+                            <li className="li add"><Link to="/login">Be a Member</Link></li>
                         </ul>
                     </div>
                 </div>

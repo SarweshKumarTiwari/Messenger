@@ -1,13 +1,8 @@
-import { Outlet } from 'react-router-dom'
-import Footer from '../../Components/footer/Footer'
-import NavBar from '../../Components/nav/screen/NavBar'
-
+import { Outlet } from 'react-router-dom';
 export default function AuthPage() {
   return (
-    <>
-    <NavBar/>
-    <Outlet/>
-    <Footer/>
-    </>
+    <div style={{"backgroundImage":"url(./bg.png)","height":"100vh","width":"100vw","position":"fixed"}}>
+    <Outlet />
+    </div>
   )
 }

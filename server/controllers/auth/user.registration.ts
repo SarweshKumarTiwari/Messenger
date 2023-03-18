@@ -15,17 +15,25 @@ class UserRegistration{
     
     //check whether user exists or not
     async checkUserExists(req:Request,res:Response,next:NextFunction){
-        if (await usersCRUD.getUserbyEmail(req.body.email as string)!==null) {
-            return res.status(400).json({error:"user already exists"});
+        try {
+            if (await usersCRUD.getUserbyEmail(req.body.email as string)!==null) {
+                return res.status(400).json({error:"user already exists"});
+            }
+            next();
+        } catch (error) {
+            return res.status(400).json({error:"internal server error"});
         }
-        next();
     }
 
     //register user
-    async registerUser(req:Request,res:Response,next:NextFunction){
-        req.body.password= await password.encrypt(req.body.password);
-        const data=await usersCRUD.createUser(req.body);
-        return res.status(201).json({success:"Successfully registered user",data:data});
+    async registerUser(req:Request,res:Response){
+        try {
+            req.body.password= await password.encrypt(req.body.password);
+            const data=await usersCRUD.createUser(req.body);
+            return res.status(201).json({success:"Successfully registered user",data:data});
+        } catch (error) {
+            return res.status(400).json({error:"internal server error"});
+        }
     }
 }
 

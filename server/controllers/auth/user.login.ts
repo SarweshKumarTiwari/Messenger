@@ -3,9 +3,9 @@ import userModels from "../../models/userModels/userModels";
 import verifyUser from "../../services/auth/verifyUser";
 
 class AuthController {
+    //Login user algorithm
     async getUsersCredentials(req: Request, res: Response) {
         try {
-            console.log(req.headers.authorization)
             if (!(req.body.email && req.body.password)) {
                 return res.status(404).json({ error: "some fields are empty" });
             }
@@ -35,7 +35,7 @@ class AuthController {
             console.log(error);
         }
     }
-
+    //authorise user by verifying token
     async authoriseuser(req: Request, res: Response, next: NextFunction) {
         try {
             if (!req.headers.authorization) {
@@ -45,7 +45,8 @@ class AuthController {
                 if (!payload) {
                     return res.status(402).json({error:"user not authorised or in valid token"})
                 }
-                return res.status(200).json({data:payload})
+                req.body.user_data=payload;
+                next();
             }).catch(err=>{
                 console.log(err);
             })
@@ -53,6 +54,9 @@ class AuthController {
         catch(error){
             console.log(error);
         }
+    }
+    async getdataOfAuthorisedUser(req:Request,res: Response){
+        return res.status(200).json(req.body);
     }
 }
 

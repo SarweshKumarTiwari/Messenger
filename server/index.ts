@@ -3,7 +3,8 @@ import dotenv from "dotenv";
 import parser from "./config/parser"
 import cookies from "./config/cookies";
 import connectUsers from "./config/connectDB";
-import routes from "./routes/auth.routes"
+import routes from "./routes/auth.routes";
+import groupfriendroutes from "./routes/membergroups.routes";
 import cors from "./config/cors";
 
 //accessing enviornment variable
@@ -29,6 +30,7 @@ app.use(parser);
 
 // using different routes
 app.use(routes);
+app.use(groupfriendroutes);
 
 //listening at port 4000
 app.listen(Port,()=>console.log(`server running on port ${Port}`));

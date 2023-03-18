@@ -10,6 +10,8 @@ userRegistration.registerUser);
 
 routes.post("/auth/login",AuthController.getUsersCredentials);
 
-routes.get("/auth/authorise_user",AuthController.authoriseuser);
+routes.get("/auth/authorise_user",
+AuthController.authoriseuser,
+AuthController.getdataOfAuthorisedUser);
 
 export default routes;

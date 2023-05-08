@@ -1,19 +1,44 @@
 import { useContext, useRef } from 'react'
 import { BubbleBox } from '../users'
 import { UseContext } from '../context/ProviderOfContext';
+import { authUser } from '../../../AuthUserContext';
+import { useMutation } from 'react-query';
+import ChatRequests from '../Requests/ChatRequests';
 interface callback {
     sendmsg: (e: BubbleBox) => void
 }
-export default function ChatBottomNav(sendmsg: callback) {
+export default function ChatBottomNav({ sendmsg }: callback) {
     const first = useRef<HTMLInputElement>(null!);
     const { data } = useContext(UseContext);
+    const user = useContext(authUser);
+
+    const { mutate } = useMutation({
+        mutationFn: ChatRequests.sendChat,
+    })
     const Send = () => {
-        sendmsg.sendmsg({
-            category: 3,
+        const userChat = {
+            category: 0,
+            id: data?._id,
             user: {
-                userId: String(data?.id),
+                userId: user?.user_data?.id,
+                name: user?.user_data?.name,
                 message: first.current.value,
-                date: "12:45 pm"
+            }
+        }
+        mutate(userChat, {
+            onSuccess: () => {
+                const d= new Date();
+                sendmsg({
+                    category: 0,
+                    id: data?._id,
+                    user: {
+                        userId: user?.user_data?.id,
+                        name: user?.user_data?.name,
+                        message: first.current.value,
+                        date:{date:`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`,
+                            time:`${d.getHours()}:${d.getMinutes()}`}
+                    }
+                })
             }
         });
     }

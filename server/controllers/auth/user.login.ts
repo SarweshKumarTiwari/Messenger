@@ -24,10 +24,18 @@ class AuthController {
                     }
                 }).then(data => {
                     if (!data) {
-                        return res.status(402).json({ error: "not valid credentials" });
+                        return res.status(400).json({ error: "not valid credentials" });
                     }
-                    res.cookie("Access_Token", data, { httpOnly: true });
-                    return res.status(200).json({ Success: "logged in successfully" });
+                    return res.status(200).cookie(
+                        "Access_Token",
+                        data,
+                        {
+                            httpOnly:true,
+                            sameSite:"strict",
+                            secure:true
+                        }
+                    )
+                    .json({ Success: "logged in successfully"});
 
                 })
         }
@@ -38,12 +46,12 @@ class AuthController {
     //authorise user by verifying token
     async authoriseuser(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.headers.authorization) {
-                return res.status(402).json({ error: "user not authorised" })
+            if (!req.cookies.Access_Token) {
+                return res.status(400).json({ error: "user not authorised" })
             }
-            verifyUser.verify_users_token(req.headers.authorization).then(payload=>{
+            verifyUser.verify_users_token(req.cookies.Access_Token).then(payload=>{
                 if (!payload) {
-                    return res.status(402).json({error:"user not authorised or in valid token"})
+                    return res.status(400).json({error:"user not authorised or in valid token"})
                 }
                 req.body.user_data=payload;
                 next();
@@ -54,6 +62,13 @@ class AuthController {
         catch(error){
             console.log(error);
         }
+    }
+    async logout(req:Request,res:Response){
+        return res.status(200).clearCookie("Access_Token",{
+            httpOnly:true,
+            sameSite:"strict",
+            secure:true
+        }).json({success:"logged out successFully"});
     }
     async getdataOfAuthorisedUser(req:Request,res: Response){
         return res.status(200).json(req.body);

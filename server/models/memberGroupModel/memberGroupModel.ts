@@ -1,7 +1,6 @@
 import membersGroups from "../members.group.entity";
 import { memberGroupType } from "../../types/memberGroupTypes";
 import messegesEntity from "../messeges.entity";
-import mongoose from "mongoose";
 class membersGroupsCRUD {
 
     //add friends or groups to database
@@ -11,32 +10,34 @@ class membersGroupsCRUD {
 
     //get friends and groups
     async getAllGroupsorFriends(id:string,type:number){
-        const data=await membersGroups.find({type:type}).exec();
-        return data.filter(e=>e.members.includes(new mongoose.Types.ObjectId(id)));
+       return await membersGroups.find({type:type}).find({"members.id":{$eq:id}}).exec();
     }
 
-
+    //get members in group
+    async getMemberfromGroup(groupid:string){
+        return await membersGroups.findById(groupid,{members:1,_id:0});
+    }
     //add member in group
-    async addMemberinGroup(group_id: string, member_id: string) {
-        let member = await membersGroups.findById(group_id);
-        member?.members.push(new mongoose.Types.ObjectId(member_id));
-        return await membersGroups.findByIdAndUpdate(group_id, { members: member?.members });
+    async addMemberinGroup(group_id: string, member: string) {
+        return await membersGroups
+        .findByIdAndUpdate(group_id, {$push:{members:member}});
     }
     //remove member from group
     async removeMemberFromGroup(group_id: string, member_id: string) {
-        let member = await membersGroups.findById(group_id);
-        return await membersGroups.findByIdAndUpdate(group_id, { members: member?.members.filter(e => e !== new mongoose.Types.ObjectId(member_id)) });
+        await messegesEntity.deleteMany({"user.userId":member_id}).where({id:group_id});
+        return await membersGroups
+        .findByIdAndUpdate(group_id,{$pull:{members:{id:member_id}}});
 
     }
     //remove a friend and the messeges
     async removeFriend(id: string) {
-        await messegesEntity.deleteMany({user:{chatId:id}});
+        await messegesEntity.deleteMany({"user.chatId":id});
         return await membersGroups.findByIdAndRemove(id);
     }
     //remove a group and its messeges
-    async removegroup(id: string) {
-        await messegesEntity.deleteMany({user:{chatId:id}});
-        return await membersGroups.findByIdAndRemove(id);
+    async removegroup(groupid: string) {
+        await messegesEntity.deleteMany({id:groupid});
+        return await membersGroups.findByIdAndRemove(groupid);
     }
 }
 

@@ -12,20 +12,20 @@ friends.checkisnotPresent,
 friends.checkisFriendAlready,
 friends.add);
 
-routes.delete("/friends/delete",
+routes.delete("/friends/delete/:groupid",
 AuthController.authoriseuser,
 friends.delete);
 
-routes.get("/friends/getfriends",
+routes.post("/friends/getfriends",
 AuthController.authoriseuser,
 friends.getFriends);
 
 //group Routes
 routes.post("/groups/addgroup",AuthController.authoriseuser,group.newGroup);
-routes.put("/groups/addmember",AuthController.authoriseuser,group.addGroupmember);
-routes.get("/groups/getallgroups",AuthController.authoriseuser,group.showGroups);
-routes.get("/groups/getfriendsandgroups",AuthController.authoriseuser,group.getAllFriendsAndGroups);
-routes.delete("/groups/removemember",AuthController.authoriseuser,group.removeGroupmember);
-routes.delete("/groups/removegroups",AuthController.authoriseuser,group.deleteGroup);
+routes.put("/groups/addmember",AuthController.authoriseuser,group.isUser,group.addGroupmember);
+routes.post("/groups/getallgroups",AuthController.authoriseuser,group.showGroups);
+routes.post("/groups/getfriendsandgroups",AuthController.authoriseuser,group.getAllFriendsAndGroups);
+routes.put("/groups/removemember",AuthController.authoriseuser,group.removeGroupmember);
+routes.delete("/groups/removegroups/:groupid",AuthController.authoriseuser,group.deleteGroup);
 
 export default routes;

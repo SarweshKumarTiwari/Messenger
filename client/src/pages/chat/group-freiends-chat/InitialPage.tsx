@@ -1,6 +1,6 @@
 export default function InitialPage() {
     return (
-        <div className="w-2/3 h-full" style={{ "backgroundImage": "url(./bg.png)" }}>
+        <div className={`w-2/3 max-md:w-0 max-md:hidden h-full`} style={{ "backgroundImage": "url(./bg.png)" }}>
             <div className="p-20 flex flex-col justify-center w-full h-full">
                 <div className="border border-gray-100 bg-white shadow-md p-4 rounded-lg w-full  h-min">
                     <div className="flex flox-row justify-center m-4 ">

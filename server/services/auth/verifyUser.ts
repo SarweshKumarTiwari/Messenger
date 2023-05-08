@@ -21,7 +21,6 @@ class verifyUsers{
         }, process.env.ACCESS_TOKEN as string);
     }
     async verify_users_token(access_token:string):Promise<string|JwtPayload|undefined|null>{
-        access_token=access_token.split(" ")[1];
         try {
             return token.verifyToken(access_token,process.env.ACCESS_TOKEN as string);
         } catch (error) {

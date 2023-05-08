@@ -24,5 +24,9 @@ class usersCRUD{
     async deleteUser(id:string){
         return await usersmodel.findByIdAndDelete(id);
     }
+    //get all user
+    async getAllUsers(id:string){
+        return (await usersmodel.find({_id:{$ne:id}},{password:0,email:0,date:0}));
+    }
 }
 export default new usersCRUD();

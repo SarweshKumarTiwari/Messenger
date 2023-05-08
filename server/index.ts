@@ -1,11 +1,13 @@
-import express, { Application } from "express";
+import express,{ Application,} from "express";
 import dotenv from "dotenv";
 import parser from "./config/parser"
 import cookies from "./config/cookies";
 import connectUsers from "./config/connectDB";
 import routes from "./routes/auth.routes";
+import chatroutes from "./routes/chat.routes"
 import groupfriendroutes from "./routes/membergroups.routes";
 import cors from "./config/cors";
+import websocketConnection from "./config/websocketConnection";
 
 //accessing enviornment variable
 dotenv.config();
@@ -14,10 +16,10 @@ dotenv.config();
 connectUsers();
 
 //initialised application
-const app:Application=express();
+const app: Application = express();
 
 //getting port from enviornment variable 
-const Port:string=process.env.PORT || "80";
+const Port: string = process.env.PORT || "80";
 
 // allow Cors
 app.use(cors);
@@ -31,6 +33,9 @@ app.use(parser);
 // using different routes
 app.use(routes);
 app.use(groupfriendroutes);
+app.use(chatroutes);
 
 //listening at port 4000
-app.listen(Port,()=>console.log(`server running on port ${Port}`));
+const server= app.listen(Port, () => console.log(`server running on port ${Port}`));
+
+websocketConnection(server);

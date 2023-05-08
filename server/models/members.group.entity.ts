@@ -10,8 +10,23 @@ export default mongoose.model("userFriendsandGroups",new Schema({
         required:true
     },
     members:{
-        type:[mongoose.Schema.Types.ObjectId],
+        type:[
+            new Schema({
+                id:{
+                    type:mongoose.Schema.Types.ObjectId,
+                    required:true
+                },
+                name:{
+                    type:String,
+                    required:false
+                } 
+            },{_id:false})
+        ],
         required:true
+    },
+    recent_message:{
+        type:String,
+        required:false
     },
     date:{
         type:Date,

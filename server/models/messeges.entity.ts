@@ -1,13 +1,17 @@
 import mongoose, { Schema } from "mongoose";
 
 export default mongoose.model("Messeges",new Schema({
+    id:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true
+    },
     category:{
         type:Number,
-        required:true
+        default:0
     },
     user:{
         type:new Schema({
-            chatId:{
+            userId:{
                 type:String,
                 required:true
             },
@@ -24,10 +28,15 @@ export default mongoose.model("Messeges",new Schema({
                 required:false
             },
             date:{
-                type:Date,
-                default:Date.now
+                type:new Schema({date:String,time:String},{_id:false}),
+                default:()=>{
+                    const a=new Date();
+                    const date=`${a.getDate()}/${a.getMonth()+1}/${a.getFullYear()}`
+                    const time=`${a.getHours()}:${a.getMinutes()}`;
+                    return {date:date,time:time};
+                }
             },
-        }),
+        },{_id:false}),
         required:false
     },
     message:{

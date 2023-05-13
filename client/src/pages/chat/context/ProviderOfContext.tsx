@@ -20,7 +20,6 @@ export default function ProviderOfContext({children}:UserContextProvider) {
             {
                 data:user,
                 callback:(e,userId)=>{
-                    console.log(userId);
                     setuser(prev=>{
                         if (prev!==null) {
                             socket.emit("leave_room",e?._id as string)

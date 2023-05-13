@@ -11,8 +11,7 @@ interface callback {
 }
 export default function ChatNav(sendmsg: callback) {
   const { data, setSmall } = useContext(UseContext);
-  const user=useContext(authUser)?.user_data;
-
+  const user=useContext(authUser);
   const file = useRef<HTMLInputElement>(null!)
   const [option, setoption] = useState<boolean>(false);
   
@@ -24,20 +23,23 @@ export default function ChatNav(sendmsg: callback) {
   function log() {
     getURLfromFile(file.current.files![0], (e) => {
       const d=new Date();
+    
       sendmsg.sendmsg({
-        category:0,
-        id:data?._id,
-        user: {
-          userId:user?.id,
-          image: e,
-          date:{date:`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`,
-          time:`${d.getHours()}:${d.getMinutes()}`}
-        }
+          category:0,
+          id:data?._id,
+          user: {
+            userId:user?.user_data?.id,
+            image: e,
+            date:{date:`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`,
+            time:`${d.getHours()}:${d.getMinutes()}`}
+          }
+        })
       })
-    });
+      
+    
   }
   return (
-    <div className="py-2 px-3 relative bg-sky-500 shadow-md border-l border-sky-500 flex flex-row justify-between items-center ">
+    <div className="py-2 px-3  bg-sky-500 shadow-md border-l border-sky-500 flex flex-row justify-between items-center ">
       <div className="flex  max-md:items-start  items-center">
         <div className="flex items-center">
           <div onClick={() => { setSmall() }}>
@@ -60,7 +62,7 @@ export default function ChatNav(sendmsg: callback) {
       </div>
 
       <div className="flex">
-        <div className="ml-6 p-2 max-md:p-0 max-md:ml-2">
+        <div className="ml-6 p-2 max-md:p-2 max-md:ml-2">
           <label htmlFor="inputtag">
             <input type="file" style={{ "display": "none" }} id="inputtag" ref={file} onChange={log} />
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 16 16">
@@ -69,7 +71,7 @@ export default function ChatNav(sendmsg: callback) {
             </svg>
           </label>
         </div>
-        <div className={`ml-4 p-2 max-md:p-0 max-md:ml-2 ${option && "rounded-full bg-sky-600"}`} >
+        <div className={`ml-4 p-2 max-md:p-2 max-md:ml-2 ${option && "rounded-full bg-sky-600"}`} >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" className="bi bi-list" viewBox="0 0 16 16" onClick={() => setoption(!option)}>
             <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
           </svg>

@@ -8,11 +8,13 @@ export default function ChatPage() {
       <div className="h-screen w-screen">
         <div className="flex   border border-gray rounded shadow-lg h-full">
           <SocketConfig>
+
             <ProviderOfContext>
-              <GroupNav/>
+              <GroupNav />
               <ChatBox />
             </ProviderOfContext>
-            </SocketConfig>
+
+          </SocketConfig>
         </div>
       </div>
     </div>

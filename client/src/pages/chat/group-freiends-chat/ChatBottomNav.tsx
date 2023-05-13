@@ -3,6 +3,7 @@ import { BubbleBox } from '../users'
 import { UseContext } from '../context/ProviderOfContext';
 import { authUser } from '../../../AuthUserContext';
 import { useMutation } from 'react-query';
+import DateNow from "../../../utils/Date"
 import ChatRequests from '../Requests/ChatRequests';
 interface callback {
     sendmsg: (e: BubbleBox) => void
@@ -27,7 +28,6 @@ export default function ChatBottomNav({ sendmsg }: callback) {
         }
         mutate(userChat, {
             onSuccess: () => {
-                const d= new Date();
                 sendmsg({
                     category: 0,
                     id: data?._id,
@@ -35,8 +35,10 @@ export default function ChatBottomNav({ sendmsg }: callback) {
                         userId: user?.user_data?.id,
                         name: user?.user_data?.name,
                         message: first.current.value,
-                        date:{date:`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`,
-                            time:`${d.getHours()}:${d.getMinutes()}`}
+                        date:{
+                            date:DateNow.date(),
+                            time:DateNow.time()
+                        }
                     }
                 })
             }

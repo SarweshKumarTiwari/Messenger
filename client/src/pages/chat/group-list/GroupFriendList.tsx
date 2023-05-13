@@ -6,6 +6,7 @@ import { GroupRequests } from '../Requests/GroupFriendRequests';
 import { authUser } from '../../../AuthUserContext';
 import { SocketProvider } from '../../../SocketConfig';
 
+
 type propType = {
     disconnectId: string | null;
     setDisconnectedId: React.Dispatch<React.SetStateAction<string | null>>
@@ -39,6 +40,7 @@ export default function GroupFriendList({ disconnectId, setDisconnectedId }: pro
         const l = isUserOnline.filter(e => members.filter(ele => ele.id === e)[0]);
         return l.length;
     }
+
     useEffect(() => {
         if (disconnectId) {
             setisUserOnline(prev => {
@@ -61,7 +63,7 @@ export default function GroupFriendList({ disconnectId, setDisconnectedId }: pro
                 if (!online.includes(userId)) {
                     online.push(userId);
                 }
-                sessionStorage.setItem("isUserOnline",JSON.stringify(online));
+                sessionStorage.setItem("isUserOnline", JSON.stringify(online));
 
                 /////////////////////////////////////////////////////////////////
 
@@ -73,7 +75,8 @@ export default function GroupFriendList({ disconnectId, setDisconnectedId }: pro
         return () => {
             socket.off("new_user", fun)
         }
-    }, [disconnectId, isAuth?.user_data?.id, setDisconnectedId, socket])
+
+    }, [disconnectId, isAuth?.user_data?.id, profile, setDisconnectedId, socket])
     if (isLoading) {
         return <div>loading...</div>
     }
@@ -86,26 +89,33 @@ export default function GroupFriendList({ disconnectId, setDisconnectedId }: pro
                 <input type="text" className="w-full px-2 py-2 rounded-r-2xl text-sm text-gray-600 bg-gray-100 placeholder-gray-400 outline-none" value={first} onChange={e => setfirst(e.target.value)} placeholder="Search or start new chat" />
             </div>
             <div className=" flex-1 overflow-auto">
-                {filteredNames.length ? filteredNames.map((e: groups) => <div className="px-3 flex items-center hover:bg-gray-200 cursor-pointer" key={e._id} onClick={() => { callback(e, isAuth?.user_data?.id); setSmall() }} >
-                    <div className='relative'>
-                        <img className="h-12 w-12 rounded-full"
-                            src={e.img ? e.img : "https://icons.iconarchive.com/icons/graphicloads/flat-finance/256/person-icon.png"} alt='not_fnd' />
-                        {online(e.members) && !e.type ? <div className="absolute bg-sky-400 bottom-0 right-0 rounded-full" style={{ "minWidth": "10px", "minHeight": "10px" }}></div> : null}
-                    </div>
-                    <div className="ml-4 flex-1 border-b border-grey-lighter py-4">
-                        <div className="flex items-bottom justify-between">
-                            <p className="text-gray-800">
-                                {e.name}
-                            </p>
-                            <p className="text-xs text-gray-800">
-                                {e.date}
-                            </p>
-                        </div>
-                        <p className="text-gray-600 mt-1 text-sm">
-                            {e.recent_msg}
-                        </p>
-                    </div>
-                </div>) :
+                {filteredNames.length ? filteredNames.map((e: groups, i) => {
+                    return (
+                        <div className="px-3 flex items-center hover:bg-gray-200 cursor-pointer" key={e._id} onClick={() => { callback(e, isAuth?.user_data?.id); setSmall() }} >
+                            <div className='relative'>
+
+                                <img className="h-12 w-12 rounded-full"
+                                    src={e.img ? e.img : "https://icons.iconarchive.com/icons/graphicloads/flat-finance/256/person-icon.png"} alt='not_fnd' />
+                                {online(e.members) && !e.type ? <div className="absolute bg-sky-400 bottom-0 right-0 rounded-full" style={{ "minWidth": "10px", "minHeight": "10px" }}></div> : null}
+                            </div>
+                            <div className="ml-4 flex-1 border-b border-grey-lighter py-4">
+                                <div className="flex items-bottom justify-between">
+                                    <p className="text-gray-800">
+                                        {e.name}
+                                    </p>
+                                    <p className="text-xs text-gray-800">
+                                        {e.date}
+                                    </p>
+                                </div>
+                                <p className="text-gray-600  text-sm">
+                                    {e.recent_msg}
+
+                                </p>
+
+
+                            </div>
+                        </div>)
+                }) :
                     <div className='text-center m-4 p-2'>Not Found</div>
                 }
             </div>

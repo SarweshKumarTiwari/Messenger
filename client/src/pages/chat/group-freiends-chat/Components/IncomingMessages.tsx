@@ -22,7 +22,9 @@ export default function IncomingMessages({ name, message, date, image }: incomin
                     <p className="text-sm mt-1">
                         {message}
                     </p>
-                    
+                    <p className="text-right text-xs  mt-1">
+                                    {date?.time}
+                                </p>
                 </div>}
             </div>
         </div>

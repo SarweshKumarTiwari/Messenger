@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import Requests from "./Requests";
 import { object, string, ref } from "yup";
 import "./authstyle.css";
@@ -20,10 +20,23 @@ export default function Signup() {
   const { mutate,isLoading} = useMutation(Requests.registerUser, {
     onError: (error: AxiosError<{ error: string }>) => { },
     onSuccess: (result) => {
-      isAuth?.setuserData(result.data);
+      isAuth?.setuserData(result.data.success);
+      console.log(isAuth);
     }
   });
 
+  //initialized useQuery to fetch data
+  const {refetch}=useQuery({
+    queryKey:["validate_user"],
+    queryFn:Requests.getUser,
+    retry:false,
+    refetchOnWindowFocus:false,
+    enabled:isAuth!==null,
+    onSuccess:(data)=>{
+      isAuth?.setuserData(data?.data.user_data);
+    }
+  })
+  
   function onSubmit(values: {
     name: string
     email: string
@@ -41,6 +54,7 @@ export default function Signup() {
         seterror(error.response?.data?.error as string);
       },
       onSuccess: () => {
+        refetch();
         navigate("/");
       }
     }

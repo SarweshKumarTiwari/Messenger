@@ -75,6 +75,7 @@ export default function GroupFriendList() {
     if (isLoading) {
         return <div>loading...</div>
     }
+    console.log("mjcg")
     return (
         <>
             

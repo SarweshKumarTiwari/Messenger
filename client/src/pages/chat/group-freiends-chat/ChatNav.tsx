@@ -5,6 +5,8 @@ import { getURLfromFile } from '../../../utils/uploadFile';
 import AddMember from './Components/AddMember';
 import GetMembersOrDeleteMembers from './Components/GetMebersOrDeleteMembers';
 import { authUser } from '../../../AuthUserContext';
+import {useMutation} from "react-query";
+import ChatRequests from '../Requests/ChatRequests';
 
 interface callback {
   sendmsg: (e: BubbleBox) => void
@@ -14,26 +16,35 @@ export default function ChatNav(sendmsg: callback) {
   const user=useContext(authUser);
   const file = useRef<HTMLInputElement>(null!)
   const [option, setoption] = useState<boolean>(false);
-  
   const [memberInOut, setmemberInOut] = useState({ memberIN: false, memberOut: false });
-  
-  
 
-
+  const {mutate}=useMutation({
+    mutationFn:ChatRequests.sendChat
+  })
+  
   function log() {
     getURLfromFile(file.current.files![0], (e) => {
       const d=new Date();
-    
-      sendmsg.sendmsg({
-          category:0,
+      const d1:BubbleBox={
+        category:0,
           id:data?._id,
           user: {
             userId:user?.user_data?.id,
-            image: e,
-            date:{date:`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`,
-            time:`${d.getHours()}:${d.getMinutes()}`}
+            name:user?.user_data?.name,
+            image: e
           }
-        })
+      }
+      mutate(d1,{
+        onSuccess:()=>{
+          sendmsg.sendmsg({
+              ...d1,
+              user:{...d1.user,
+                date:{date:`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`,
+              time:`${d.getHours()}:${d.getMinutes()}`}
+            }
+            })
+        }
+      })
       })
       
     

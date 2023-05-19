@@ -1,5 +1,4 @@
 import { useState, useContext } from 'react';
-import { UseContext } from '../context/ProviderOfContext';
 import { useMutation, useQuery } from 'react-query';
 import { authUser } from '../../../AuthUserContext';
 import axios, { AxiosError } from 'axios';
@@ -12,7 +11,6 @@ type users = {
     profile_pic?: string
 }
 export default function GroupFriendList() {
-    const { setSmall } = useContext(UseContext);
     const isAuth = useContext(authUser);
     const [profile, setprofile] = useState<users[]>([]);
     const [groupon, setgroupon] = useState(false);
@@ -75,7 +73,6 @@ export default function GroupFriendList() {
     if (isLoading) {
         return <div>loading...</div>
     }
-    console.log("mjcg")
     return (
         <>
             
@@ -92,7 +89,7 @@ export default function GroupFriendList() {
             </div>
             <div className="flex-1 overflow-auto " id="checkboxes">
                 {filteredNames.length ? filteredNames.map((e: users) => 
-                <div className="px-3 flex items-center hover:bg-gray-200 cursor-pointer" key={e._id} onClick={() => setSmall()}>
+                <div className="px-3 flex items-center hover:bg-gray-200 cursor-pointer" key={e._id}>
                     <div>
                         <img className="h-12 w-12 rounded-full"
                             src={e.profile_pic ? e.profile_pic : "https://icons.iconarchive.com/icons/graphicloads/flat-finance/256/person-icon.png"} alt='not_fnd' />

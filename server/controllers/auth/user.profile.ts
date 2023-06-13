@@ -15,6 +15,29 @@ class UserProfile{
             return res.status(400).json({error:error})
         }
     }
+    //get user by id 
+    async getUserById(req:Request,res:Response){
+        if (!req.params.id) {
+            return res.json({error:"id not found"})
+        }
+        try {
+            return res.status(200).json({success:await userModels.getUser(req.params.id)})    
+        } catch (error) {
+            return res.status(400).json({error:error})
+        }
+    }
+    //update profile pic
+    async updateProfilePic(req:Request,res:Response){
+        if (!req.body.id) {
+            return res.status(400).json({error:"id not provided"});
+        }
+        try {
+            const data=await userModels.editOrUpdateUser(req.body.id,{profile_pic:req.body.profile_pic})
+            return res.status(200).json({success:"added profile pic"})
+        } catch (error) {
+            return res.status(400).json({error:error});
+        }
+    }
     
 }
 

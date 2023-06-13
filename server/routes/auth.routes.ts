@@ -24,4 +24,12 @@ routes.get("/auth/getallusers/:userid",
 AuthController.authoriseuser,
 userProfile.getAllUsers)
 
+routes.post("/auth/updatepic",
+AuthController.authoriseuser,
+userProfile.updateProfilePic)
+
+routes.get("/auth/getuser/:id",
+AuthController.authoriseuser,
+userProfile.getUserById)
+
 export default routes;

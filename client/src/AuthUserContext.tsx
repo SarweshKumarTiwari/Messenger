@@ -6,6 +6,7 @@ type UserContextProvider = {
 type user = {
     name: string
     email: string
+    profile_pic:string|null
     id: string
     iat?: number
 }

@@ -5,6 +5,10 @@ export default mongoose.model("userFriendsandGroups",new Schema({
         type:String,
         required:false
     },
+    img:{
+        type:String,
+        required:false
+    },
     type:{
         type:Number,
         required:true

@@ -9,7 +9,7 @@ class usersCRUD{
     }
     //get user by id
     async getUser(id:string){
-        return await usersmodel.findById(id);
+        return await usersmodel.findById(id,{password:0,date:0});
     }
     //get user by given parameters
     async getUserbyEmail(email:string){

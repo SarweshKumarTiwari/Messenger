@@ -2,6 +2,7 @@ import axios from "axios";
 
 axios.defaults.withCredentials=true;
 const url:string="http://localhost:4000";
+
 type formData = {
         error?: string
         name?: string
@@ -9,13 +10,22 @@ type formData = {
         password: string
 }
 
+type toUpdate={
+    id:string,
+    name?:string,
+    profile_pic?:string
+}
 class Requests{
     async registerUser(data:formData){
         return await axios.post(url+"/auth/register",data,{
             withCredentials:true
         });
     }
-
+    async update(newUpdate:toUpdate){
+        return await axios.post(url+"/auth/updatepic",newUpdate,{
+            withCredentials:true
+        })
+    }
     async loginUser(data:formData){
         return await axios.post(url+"/auth/login",data,{
             withCredentials:true
@@ -30,6 +40,12 @@ class Requests{
 
     async deleteUser(){
         return await axios.delete(url+"/auth/logout",{
+            withCredentials:true
+        })
+    }
+
+    async getUserById(id:string){
+        return await axios.get(url+"/auth/getuser/"+id,{
             withCredentials:true
         })
     }

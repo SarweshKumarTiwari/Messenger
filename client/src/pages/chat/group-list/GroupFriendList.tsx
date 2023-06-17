@@ -103,9 +103,11 @@ export default function GroupFriendList({ disconnectId, setDisconnectedId }: pro
                                     <p className="text-gray-800">
                                         {e.name}
                                     </p>
+                                    { /*
                                     <p className="text-xs text-gray-800">
                                         {e.date}
                                     </p>
+                                    */}
                                 </div>
                                 <p className="text-gray-600  text-sm">
                                     {e.recent_msg}

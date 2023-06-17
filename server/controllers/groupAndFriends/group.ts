@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import memberGroupModel from "../../models/memberGroupModel/memberGroupModel";
-import userModels from "../../models/userModels/userModels";
+import userModel from "../../models/userModels/userModels"
 import validateData from "../../services/friendsGroupsServices/validateData";
-import addName from "../../services/friendsGroupsServices/GetFriendsName"
+import addName,{addProfilepic} from "../../services/friendsGroupsServices/GetFriendsName"
 import { memberGroupType } from "../../types/memberGroupTypes";
 class GroupController {
 
@@ -23,6 +23,9 @@ class GroupController {
             return res.status(400).json({ error: error });
         });
     }
+    
+    
+    
     //check user present
     async isUser(req: Request, res: Response, next: NextFunction) {
         if (!req.body.member.id) {
@@ -35,6 +38,8 @@ class GroupController {
         }
         next();
     }
+
+
 
     async addGroupmember(req: Request, res: Response) {
         if (!req.body.groupid && !req.body.member.id) {
@@ -49,6 +54,9 @@ class GroupController {
             return res.status(400).json({ error: e })
         })
     }
+
+
+
 
     async removeGroupmember(req: Request, res: Response) {
         if (!req.body.groupid && !req.body.member_id) {
@@ -65,6 +73,9 @@ class GroupController {
         })
     }
 
+
+
+
     async showGroups(req: Request, res: Response) {
         if (!req.body.groupid) {
             return res.status(401).json({ error: "not Provided id" })
@@ -76,6 +87,9 @@ class GroupController {
             return res.status(404).json({ error: "groups not found" })
         }).catch(e => res.status(400).json({ error: e }));
     }
+
+
+
 
     async deleteGroup(req: Request, res: Response) {
         if (!req.params.groupid) {
@@ -89,17 +103,22 @@ class GroupController {
         }).catch(e => res.status(400).json({ error: e }));
     }
 
+
+
+
     async getAllFriendsAndGroups(req: Request, res: Response) {
         if (!req.body.userid) {
             return res.status(404).json({ error: "no id found" });
         }
         try {
             memberGroupModel.getAllGroupsorFriends(req.body.userid, 1).then(doc => {
-                memberGroupModel.getAllGroupsorFriends(req.body.userid, 0).then(e => {
+                memberGroupModel.getAllGroupsorFriends(req.body.userid, 0).then(async e => {
                     if (e.length > 0) {
                         const n: memberGroupType[] = JSON.parse(JSON.stringify(doc))
-                        const ele: memberGroupType[] = JSON.parse(JSON.stringify(e))
-                        return res.status(200).json({ success: n.concat(addName(ele, req.body.userid)) });
+                        const ele: memberGroupType[] = JSON.parse(JSON.stringify(e));
+                        let {data,ids}=addName(ele, req.body.userid);
+                        data=addProfilepic(data,await userModel.getAllUsersByIds(ids));
+                        return res.status(200).json({ success: n.concat(data) });
                     }
                     return res.status(200).json({ success: doc });
                 })

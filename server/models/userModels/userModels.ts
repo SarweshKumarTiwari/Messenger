@@ -28,5 +28,9 @@ class usersCRUD{
     async getAllUsers(id:string){
         return (await usersmodel.find({_id:{$ne:id}},{password:0,email:0,date:0}));
     }
+    //get all users profile by ids
+    async getAllUsersByIds(id:string[]){
+        return (await usersmodel.find({_id:{$in:id}},{password:0,email:0,date:0,name:0}));
+    }
 }
 export default new usersCRUD();

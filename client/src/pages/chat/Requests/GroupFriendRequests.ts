@@ -1,10 +1,11 @@
 import axios from "axios";
 import { member } from "../users";
+import baseurl from "../../url"
 
 axios.defaults.withCredentials=true;
 
-const url="http://localhost:4000/groups"
-const url1="http://localhost:4000/friends"
+const url=baseurl+"/groups"
+const url1=baseurl+"/friends"
 class groupRequests{
     async getGroupsAndFriends(userid:string){
         return axios.post(url+"/getfriendsandgroups",

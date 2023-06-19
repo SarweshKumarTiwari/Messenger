@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { authUser } from '../../../AuthUserContext';
 import axios, { AxiosError } from 'axios';
+import url from '../../url';
 import { FriendRequests, GroupRequests } from '../Requests/GroupFriendRequests';
 import { member } from '../users';
 
@@ -20,7 +21,7 @@ export default function GroupFriendList() {
     //fetching users
     const { isLoading } = useQuery({
         queryKey: ["get_friends"],
-        queryFn: () => axios.get("http://localhost:4000/auth/getallusers/" + isAuth?.user_data?.id as string,
+        queryFn: () => axios.get(url+"/auth/getallusers/" + isAuth?.user_data?.id as string,
             {
                 withCredentials: true
             }),

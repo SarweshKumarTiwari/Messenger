@@ -1,7 +1,8 @@
 import axios from "axios";
+import url from '../url';
 
 axios.defaults.withCredentials=true;
-const url:string="http://localhost:4000";
+
 
 type formData = {
         error?: string
@@ -15,6 +16,7 @@ type toUpdate={
     name?:string,
     profile_pic?:string
 }
+console.log(url)
 class Requests{
     async registerUser(data:formData){
         return await axios.post(url+"/auth/register",data,{

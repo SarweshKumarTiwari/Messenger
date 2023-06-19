@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect,useRef} from "react";
 import { Socket,io} from "socket.io-client";
 import { ClientToServerEmits, ServerToClientEmits } from
-    "../../server/websocket/Server_Client_configs"
+    "./Server_Client_configs"
 import { authUser } from "./AuthUserContext";
 import url from "./pages/url"
 

@@ -16,7 +16,7 @@ jobs:
     # Build for messenger-client
     steps:
     - uses: actions/checkout@v3
-    - uses: SarweshKumarTiwari/Messenger@v2
+    - uses: SarweshKumarTiwari/Messenger@v3
       id: filter
       with:
         filters: |

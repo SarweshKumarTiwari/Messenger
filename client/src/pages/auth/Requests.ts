@@ -16,7 +16,7 @@ type toUpdate={
     name?:string,
     profile_pic?:string
 }
-console.log(url)
+
 class Requests{
     async registerUser(data:formData){
         return await axios.post(url+"/auth/register",data,{

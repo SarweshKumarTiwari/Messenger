@@ -24,6 +24,8 @@ jobs:
           server:
             - 'server/**'
 
+    - name: check
+      run: echo ${{steps.filter.outputs.client}}
     - name: Dockerhub login
       uses: docker/login-action@v2
       if: steps.filter.outputs.client=='true' || steps.filter.outputs.server=='true'

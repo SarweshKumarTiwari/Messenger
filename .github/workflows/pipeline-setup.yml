@@ -25,13 +25,8 @@ jobs:
             - 'client/**'
           server:
             - 'server/**'
-
-    - name: check
-      run: | 
-        echo ${{steps}}
-        echo ${{steps.filter}}
-        echo ${{steps.filter.outputs}}
-        echo ${{steps.filter.outputs.server}}
+            
+            
     - name: Dockerhub login
       uses: docker/login-action@v2
       if: steps.filter.outputs.client=='true' || steps.filter.outputs.server=='true'

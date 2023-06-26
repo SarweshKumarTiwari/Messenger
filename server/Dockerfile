@@ -12,7 +12,7 @@ RUN echo "installing npm dependencies"
 RUN npm install
 RUN npm install ts-node -g
 
-
+#Copying all the files and folder to current working directory
 COPY . .
 
 #Setting up ARGS variables

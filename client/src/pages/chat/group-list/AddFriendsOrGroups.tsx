@@ -5,6 +5,7 @@ import axios, { AxiosError } from 'axios';
 import url from '../../url';
 import { FriendRequests, GroupRequests } from '../Requests/GroupFriendRequests';
 import { member } from '../users';
+import {SocketProvider} from "../../../SocketConfig";
 
 type users = {
     _id: string,
@@ -13,6 +14,7 @@ type users = {
 }
 export default function GroupFriendList() {
     const isAuth = useContext(authUser);
+    const socket=useContext(SocketProvider);
     const [profile, setprofile] = useState<users[]>([]);
     const [groupon, setgroupon] = useState(false);
     const [first, setfirst] = useState("");
@@ -34,9 +36,6 @@ export default function GroupFriendList() {
     //adding friends
     const addFriend = useMutation({
         mutationFn: FriendRequests.addFriend,
-        onSuccess: () => {
-            alert("successfully added friend");
-        },
         onError: (error: AxiosError) => {
         }
     })
@@ -112,7 +111,12 @@ export default function GroupFriendList() {
                                                 id: e._id,
                                                 name: e.name
                                             }
-                                        ],id:isAuth?.user_data?.id as string})
+                                        ],id:isAuth?.user_data?.id as string},{
+                                            onSuccess:()=>{
+                                                socket.emit("added_friend",e._id);
+                                                alert("successfully added friend");
+                                            }
+                                        })
                                     }} className='rounded-lg p-2 bg-sky-500 hover:bg-sky-600'>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 16 16">
                                             <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />

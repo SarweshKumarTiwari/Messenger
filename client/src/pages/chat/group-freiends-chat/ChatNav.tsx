@@ -7,6 +7,7 @@ import GetMembersOrDeleteMembers from './Components/GetMebersOrDeleteMembers';
 import { authUser } from '../../../AuthUserContext';
 import {useMutation} from "react-query";
 import ChatRequests from '../Requests/ChatRequests';
+import  {FriendRequests,GroupRequests} from '../Requests/GroupFriendRequests'
 
 interface callback {
   sendmsg: (e: BubbleBox) => void
@@ -20,6 +21,16 @@ export default function ChatNav(sendmsg: callback) {
 
   const {mutate}=useMutation({
     mutationFn:ChatRequests.sendChat
+  })
+
+  const removeFriend=useMutation({
+    mutationFn:FriendRequests.deleteFriend,
+    onSuccess:()=>alert("Removed friend successfully")
+  })
+
+  const removeGroup=useMutation({
+    mutationFn:GroupRequests.removeGroup,
+    onSuccess:()=>alert("Removed group successfully")
   })
   
   function log() {
@@ -91,8 +102,10 @@ export default function ChatNav(sendmsg: callback) {
               <li className="px-3 py-3 gray-100 hover:bg-gray-200">Settings</li>
               <li className="px-3 py-3 gray-100 hover:bg-gray-200" onClick={() => { setmemberInOut({ ...memberInOut, memberIN: true }); setoption(false) }}>Add Member</li>
               <li className="px-3 py-3 gray-100 hover:bg-gray-200" onClick={() => { setmemberInOut({ ...memberInOut, memberOut: true }); setoption(false) }}>Remove Member</li>
+              <li className="px-3 py-3 gray-100 hover:bg-gray-200" onClick={()=>removeGroup.mutate(data._id)}>Delete Group</li>
             </ul>:
             <ul>
+              <li className="px-3 py-3 gray-100 hover:bg-gray-200" onClick={()=>removeFriend.mutate(data?._id||"")}>Unfriend</li>
               <li className="px-3 py-3 gray-100 hover:bg-gray-200">Settings</li>
             </ul>}
           </div>}

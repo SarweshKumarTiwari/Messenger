@@ -19,10 +19,6 @@ export default function Signup() {
 
   const { mutate,isLoading} = useMutation(Requests.registerUser, {
     onError: (error: AxiosError<{ error: string }>) => { },
-    onSuccess: (result) => {
-      isAuth?.setuserData(result.data.success);
-      console.log(isAuth);
-    }
   });
 
   //initialized useQuery to fetch data

@@ -22,7 +22,7 @@ export default function GroupFriendList({ disconnectId, setDisconnectedId }: pro
     const filteredNames = profile.filter(e => e.name.toLowerCase().includes(first.toLowerCase()));
 
     //getting all friends and groups
-    const { isLoading } = useQuery({
+    const { isLoading ,refetch} = useQuery({
         queryKey: ["get_friends"],
         queryFn: () => GroupRequests.getGroupsAndFriends(isAuth?.user_data?.id as string),
         retry: false,
@@ -70,13 +70,21 @@ export default function GroupFriendList({ disconnectId, setDisconnectedId }: pro
                 return [...prevState, userId];
             })
         }
+        const fun2=(userId:string)=>{
+            if (userId===isAuth?.user_data?.id) {
+                refetch();
+            }
+        }
         //on user connected
+        socket.on('get_friend',fun2);
         socket.on("new_user", fun)
         return () => {
-            socket.off("new_user", fun)
+            socket.off("new_user", fun);
+            socket.off("get_friend",fun2);
         }
 
-    }, [disconnectId, isAuth?.user_data?.id, profile, setDisconnectedId, socket])
+
+    }, [disconnectId, isAuth?.user_data?.id, profile, setDisconnectedId, socket,refetch])
     if (isLoading) {
         return <div>loading...</div>
     }

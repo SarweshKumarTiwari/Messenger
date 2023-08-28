@@ -9,7 +9,8 @@ export interface ServerToClientEmits{
         message?: string
         date?:{date:string,time:string}
     })=>void,
-    user_disconnected:(userId:string)=>void
+    user_disconnected:(userId:string)=>void,
+    get_friend:(userId:string)=>void
 }
 
 export interface ClientToServerEmits{
@@ -24,5 +25,6 @@ export interface ClientToServerEmits{
         message?: string
         date?: {date:string,time:string}
     })=>void,
-    disconnected:(userId:string)=>void
+    disconnected:(userId:string)=>void,
+    added_friend:(userId:string)=>void
 }

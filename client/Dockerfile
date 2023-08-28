@@ -1,11 +1,10 @@
-FROM node:16.20.0-alpine3.18
+FROM node:16.20.0-alpine3.18 AS base
 
 WORKDIR /app
 
 RUN echo "Installing npm packages..."
 COPY package*.json ./
 RUN npm install
-RUN npm install -g serve
 RUN echo "done.."
 
 RUN echo "Copying files from current folder to working directory ...."
@@ -22,10 +21,11 @@ RUN echo "running build"
 RUN npm run build
 RUN echo "done.."
 
+FROM nginx:latest
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=base /app/build /usr/share/nginx/html
 EXPOSE 3000
 
-#CMD [ "npm","start" ]
-
-CMD [ "serve","-s","build" ]
+CMD [ "nginx","-g","daemon off;" ]
 
 

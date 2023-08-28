@@ -1,0 +1,36 @@
+networks:
+  app_bridge:
+services:
+  frontend:
+    container_name: client
+    image: sarweshkumartiwari/messenger-client:0.0.1.RELEASE
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:4000
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    networks:
+      - app_bridge
+  
+  backend:
+    container_name: server
+    image: sarweshkumartiwari/messenger-server:0.0.21
+    environment:
+      - PORT=4000
+      - DB_URI=mongodb://db:27017/Messenger
+      - ORIGIN=http://localhost:3000
+    ports:
+      - 4000:4000
+    depends_on:
+      - db
+    networks:
+      - app_bridge
+    
+  db:
+    image: mongo:4.2.24-bionic
+    ports:
+      - 27017:27017
+    networks:
+      - app_bridge
+    

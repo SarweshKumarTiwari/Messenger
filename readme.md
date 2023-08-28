@@ -12,7 +12,7 @@ In this project we setup a enviornment in which we chat with our friends and mak
     5.socket.io client
     6.yup
 
-## Intialize
+## Intialize for dev
     1.Go to client using "cd client"
     2.use "npm i" or "npm install" to install dependensies
     3.before starting client server start backend server
@@ -20,6 +20,9 @@ In this project we setup a enviornment in which we chat with our friends and mak
     5.now use "npm run dev"   
     6.use "npm start" 
 
+## For Production
+    1.now use 'npm build' in client 
+    2.And use nginx for serving static files in build folder
 # Intializing server
 ## About
     In this server I have used following libraries 
@@ -40,4 +43,18 @@ In this project we setup a enviornment in which we chat with our friends and mak
         3.4 paste it to "ACCESS_TOKEN "
 
         3.5 now assign new "PORT=4000"
+
+# Build docker images
+## Initialize Dockerfiles in both folders
+    1.Firstly install [docker](https://docs.docker.com/engine/install/) in your system
+    2.Now initialize dockerfile in both folders 
+    3.Then run following command ```bash bash
+    docker build -t user_name:version .
+    ```
+## Use docker compose
+    1.Install [docker-compose](https://docs.docker.com/compose/install/) in your system
+    2.Initialize docker-compose.yml in root folder
+    3.Then run following command on your root folder ```bash bash
+    docker compose up
+    ```
 

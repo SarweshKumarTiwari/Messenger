@@ -14,6 +14,7 @@ class WebSocketConfigs{
         SocketSetups.onUserDisconnect(this.socket);
         SocketSetups.pushConversation(this.socket);
         SocketSetups.onRoomDisconnected(this.socket);
+        SocketSetups.addedNewFriend(this.socket);
     }
 }
 export default WebSocketConfigs;

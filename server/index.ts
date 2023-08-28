@@ -19,7 +19,7 @@ connectUsers();
 const app: Application = express();
 
 //getting port from enviornment variable 
-const Port: string = process.env.PORT || "80";
+const Port: string = process.env.PORT || "4000";
 
 // allow Cors
 app.use(cors);

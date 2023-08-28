@@ -10,6 +10,11 @@ class SocketSetups{
             socket.broadcast.emit("new_user",userId);
         })
     }
+    addedNewFriend(socket:SocketConfigs){
+        socket.on("added_friend",(userId)=>{
+            socket.broadcast.emit("get_friend",userId);
+        })
+    }
 
     onUserDisconnect(socket:SocketConfigs){
         socket.on("disconnected",(userId:string)=>{

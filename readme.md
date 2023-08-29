@@ -48,13 +48,17 @@ In this project we setup a enviornment in which we chat with our friends and mak
 ## Initialize Dockerfiles in both folders
     1.Firstly install [docker](https://docs.docker.com/engine/install/) in your system
     2.Now initialize dockerfile in both folders 
-    3.Then run following command ```bash bash
-    docker build -t user_name:version .
+    3.Then run following command 
+
+    ```bash 
+        docker build -t user_name:version .
     ```
 ## Use docker compose
     1.Install [docker-compose](https://docs.docker.com/compose/install/) in your system
     2.Initialize docker-compose.yml in root folder
-    3.Then run following command on your root folder ```bash bash
-    docker compose up
+    3.Then run following command on your root folder 
+
+    ```bash 
+        docker compose up
     ```
 
